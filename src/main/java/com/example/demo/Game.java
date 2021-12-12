@@ -2,7 +2,6 @@ package com.example.demo;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -10,7 +9,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -24,30 +24,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class HelloApplication extends Application {
+public class Game extends Application {
 
-    private static final int TILE_SIZE = 50; // 10x10 tahta için
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+
+
+    static   int TILE_SIZE = 50; // 10x10 tahta için
+
+     static  int WIDTH = 500;
+     static  int HEIGHT = 500;
+
+    static  int X_TILES = WIDTH / TILE_SIZE;
+    static  int Y_TILES = HEIGHT / TILE_SIZE;
 
     private Scene startScene, gameScene;
 
-    private static final int X_TILES = WIDTH / TILE_SIZE;
-    private static final int Y_TILES = HEIGHT / TILE_SIZE;
 
-    private Tile[][] grid = new Tile[X_TILES][Y_TILES];
+    private Game.Tile[][] grid = new Game.Tile[X_TILES][Y_TILES];
 
 
     Alert a = new Alert(Alert.AlertType.NONE);
 
 
     private Pane createContent() {
+
         Pane root = new Pane();
         root.setPrefSize(WIDTH, HEIGHT);
 
         for (int y = 0; y < Y_TILES; y++) {
             for (int x = 0; x < X_TILES; x++) {
-                Tile tile = new Tile(x, y, Math.random() < 0.2);
+                Game.Tile tile = new Game.Tile(x, y, Math.random() < 0.2);
 
                 grid[x][y] = tile;
                 root.getChildren().add(tile);
@@ -56,7 +61,7 @@ public class HelloApplication extends Application {
 
         for (int y = 0; y < Y_TILES; y++) {
             for (int x = 0; x < X_TILES; x++) {
-                Tile tile = grid[x][y];
+                Game.Tile tile = grid[x][y];
 
                 if (tile.hasBomb)
                     continue;
@@ -74,9 +79,9 @@ public class HelloApplication extends Application {
         return root;
     }
 
-    private List<Tile> getNeighbors(Tile tile) {
+    private List<Game.Tile> getNeighbors(Game.Tile tile) {
 
-        List<Tile> neighbors = new ArrayList<>();
+        List<Game.Tile> neighbors = new ArrayList<>();
 
         int[] points = new int[]{
                 -1, -1,
@@ -152,7 +157,7 @@ public class HelloApplication extends Application {
                 Image i=new Image("https://img.freepik.com/free-vector/round-black-bomb-realistic-style_52683-16086.jpg?size=338&ext=jpg");
                 for (int y = 0; y < Y_TILES; y++) {
                     for (int x = 0; x < X_TILES; x++) {
-                        Tile tile = grid[x][y];
+                        Game.Tile tile = grid[x][y];
 
                         if (tile.hasBomb) {
                             tile.isOpen = true;
@@ -191,7 +196,7 @@ public class HelloApplication extends Application {
             border.setFill(null);
 
             if (text.getText().isEmpty()) {
-                getNeighbors(this).forEach(Tile::open);
+                getNeighbors(this).forEach(Game.Tile::open);
             }
         }
     }
@@ -247,6 +252,8 @@ public class HelloApplication extends Application {
 
         ten.addEventHandler(ActionEvent.ACTION, e -> {
             gameStage.show();
+
+
         });
 
         Scene startScene = new Scene(pane, 500, 500);
@@ -266,4 +273,5 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
 }
