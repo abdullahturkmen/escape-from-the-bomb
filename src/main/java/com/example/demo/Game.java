@@ -27,14 +27,13 @@ import java.util.Optional;
 public class Game extends Application {
 
 
+    static int TILE_SIZE = 50; // 10x10 tahta için
 
-    static   int TILE_SIZE = 50; // 10x10 tahta için
+    static int WIDTH = 500;
+    static int HEIGHT = 500;
 
-     static  int WIDTH = 500;
-     static  int HEIGHT = 500;
-
-    static  int X_TILES = WIDTH / TILE_SIZE;
-    static  int Y_TILES = HEIGHT / TILE_SIZE;
+    static int X_TILES = WIDTH / TILE_SIZE;
+    static int Y_TILES = HEIGHT / TILE_SIZE;
 
     private Scene startScene, gameScene;
 
@@ -116,7 +115,6 @@ public class Game extends Application {
         private boolean isOpen = false;
 
 
-
         private Rectangle border = new Rectangle(TILE_SIZE - 2, TILE_SIZE - 2);
         private Text text = new Text();
 
@@ -130,11 +128,10 @@ public class Game extends Application {
             text.setFill(Color.WHITE);
             text.setFont(Font.font(18));
 
-            if(hasBomb){
+            if (hasBomb) {
                 border.setFill(Color.BLACK);
 
-            }
-            else{
+            } else {
                 text.setText("");
             }
 
@@ -154,7 +151,7 @@ public class Game extends Application {
 
             if (hasBomb) { //game over
 
-                Image i=new Image("https://img.freepik.com/free-vector/round-black-bomb-realistic-style_52683-16086.jpg?size=338&ext=jpg");
+                Image i = new Image("https://img.freepik.com/free-vector/round-black-bomb-realistic-style_52683-16086.jpg?size=338&ext=jpg");
                 for (int y = 0; y < Y_TILES; y++) {
                     for (int x = 0; x < X_TILES; x++) {
                         Game.Tile tile = grid[x][y];
@@ -167,8 +164,6 @@ public class Game extends Application {
 
                     }
                 }
-
-
 
 
                 a.setAlertType(Alert.AlertType.CONFIRMATION);
@@ -252,8 +247,14 @@ public class Game extends Application {
 
         ten.addEventHandler(ActionEvent.ACTION, e -> {
             gameStage.show();
+        });
 
+        fifteen.addEventHandler(ActionEvent.ACTION, e -> {
+            gameStage.show();
+        });
 
+        twenty.addEventHandler(ActionEvent.ACTION, e -> {
+            gameStage.show();
         });
 
         Scene startScene = new Scene(pane, 500, 500);
@@ -273,5 +274,5 @@ public class Game extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
